@@ -29,26 +29,30 @@ public class SimpleSchoolBookService implements BookService <SchoolBook> {
 
     @Override
     public SchoolBook[] findByName(String name) {
-        return new SchoolBook[0];
+        return schoolBookBookRepository.findByName(name);
     }
 
     @Override
     public int getNumberOfBooksByName(String name) {
-        return 0;
+        return findByName(name).length;
     }
 
     @Override
     public boolean removeByName(String name) {
-        return false;
+        return schoolBookBookRepository.removeByName(name);
     }
 
     @Override
     public int count() {
-        return 0;
+        return schoolBookBookRepository.count();
     }
 
     @Override
     public Author findAuthorByBookName(String name) {
+        SchoolBook[] books = findByName(name) ;
+        if(books.length > 0){
+            return authorService.findByFullName(books[0].getAuthorName(),books[0].getAuthorLastName()) ;
+        }
         return null;
     }
 }

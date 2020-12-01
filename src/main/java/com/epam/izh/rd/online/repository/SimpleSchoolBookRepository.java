@@ -25,17 +25,29 @@ public class SimpleSchoolBookRepository implements BookRepository <SchoolBook> {
         int bookNum = 0 ;
         for (SchoolBook book: schoolBooks ) {
             if(book.getName().equals(name)){
-                books[bookNum] = book ;
+                SchoolBook[]tempBook = new SchoolBook[bookNum +1] ;
+                tempBook[bookNum] = book ;
                 bookNum++ ;
-                
+                books = tempBook ;
+                System.arraycopy(tempBook, 0, books, 0 ,bookNum);
             }
         }
-
         return books;
     }
 
     @Override
     public boolean removeByName(String name) {
+        int removeCount = count() ;
+        SchoolBook[] removeBook = new SchoolBook[removeCount] ;
+        for (SchoolBook book: schoolBooks) {
+            if( book.getName().equals(name)){
+                removeBook[removeCount] = book ;
+                removeCount-- ;
+                schoolBooks = removeBook ;
+                System.arraycopy(removeBook,0,schoolBooks,0,removeCount);
+                return true ;
+            }
+        }
         return false;
     }
 
