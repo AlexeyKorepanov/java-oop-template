@@ -33,13 +33,21 @@ public class SimpleAuthorRepository implements AuthorRepository {
 
     @Override
     public boolean remove(Author author) {
-
+         if (findByFullName(author.getName(), author.getLastName()) != null){
+            Author[] removeAuthors = new Author[authors.length - 1] ;
+            for (int i = 0 , j = 0 ; j<authors.length ; j++) {
+                 if (authors[j].getName().equals(author.getName()) && authors[j].getLastName().equals(author.getLastName()))
+                     continue;
+                 removeAuthors[i++] = authors[j] ;
+            }
+            authors = removeAuthors ;
+            return true ;
+        }
         return false;
     }
 
     @Override
     public int count() {
-
         return authors.length ;
     }
 }
