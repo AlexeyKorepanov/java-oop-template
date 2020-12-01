@@ -2,18 +2,36 @@ package com.epam.izh.rd.online.repository;
 
 import com.epam.izh.rd.online.entity.SchoolBook;
 
+import java.util.Arrays;
+
 public class SimpleSchoolBookRepository implements BookRepository <SchoolBook> {
 
-    private SchoolBook[] schoolBooks ;
+    SchoolBook[] schoolBooks = new SchoolBook[]{};
 
     @Override
     public boolean save(SchoolBook book) {
-        return false;
+        int saveCount = count() ;
+        SchoolBook [] saveBook = new SchoolBook[saveCount + 1] ;
+        saveBook[saveCount] = book ;
+        System.arraycopy(schoolBooks, 0 ,saveBook, 0 ,saveCount);
+        schoolBooks = saveBook ;
+
+        return true;
     }
 
     @Override
     public SchoolBook[] findByName(String name) {
-        return new SchoolBook[0];
+        SchoolBook[] books = new SchoolBook[]{};
+        int bookNum = 0 ;
+        for (SchoolBook book: schoolBooks ) {
+            if(book.getName().equals(name)){
+                books[bookNum] = book ;
+                bookNum++ ;
+                
+            }
+        }
+
+        return books;
     }
 
     @Override
@@ -23,6 +41,6 @@ public class SimpleSchoolBookRepository implements BookRepository <SchoolBook> {
 
     @Override
     public int count() {
-        return 0;
+        return schoolBooks.length;
     }
 }

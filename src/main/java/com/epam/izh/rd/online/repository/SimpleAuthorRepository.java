@@ -10,9 +10,8 @@ public class SimpleAuthorRepository implements AuthorRepository {
     public boolean save(Author author) {
         int saveCount = count() ;
         if (findByFullName(author.getName(), author.getLastName()) == null){
-
-            saveCount++ ;
-            Author[] saveAuthor = new Author[saveCount] ;
+            Author[] saveAuthor = new Author[saveCount+1] ;
+            saveAuthor[saveCount] = author ;
             System.arraycopy(authors, 0 ,saveAuthor ,0, saveCount);
             authors = saveAuthor ;
             return true ;
@@ -22,7 +21,6 @@ public class SimpleAuthorRepository implements AuthorRepository {
 
     @Override
     public Author findByFullName(String name, String lastname) {
-
         for (Author author : authors) {
             if (author.getName().equals(name) && author.getLastName().equals(lastname)){
                 return author ;
