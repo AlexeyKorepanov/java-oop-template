@@ -38,13 +38,16 @@ public class SimpleSchoolBookRepository implements BookRepository <SchoolBook> {
     @Override
     public boolean removeByName(String name) {
         int removeCount = 0 ;
-        int num = count() ;
-        for (SchoolBook book: schoolBooks) {
+        int num = count();
+        for (SchoolBook book : schoolBooks) {
             if( book.getName().equals(name)){
                 removeCount++ ;
                 SchoolBook[] removeBook = new SchoolBook[num-removeCount] ;
+                //System.arraycopy(schoolBooks,0,removeBook,0,removeBook.length);
                 schoolBooks = removeBook ;
             }
+
+
         }
         return removeCount!=0;//return removeCount!=cont() тоже отработало, почему?
     }

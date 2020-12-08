@@ -12,8 +12,6 @@ public class SimpleAuthorRepository implements AuthorRepository {
         if (findByFullName(author.getName(), author.getLastName()) == null){
             Author[] saveAuthor = new Author[saveCount+1] ;
             saveAuthor[saveCount] = author ;
-           // System.arraycopy(authors, 0 ,saveAuthor ,0, saveCount);
-
             authors = saveAuthor ;
             return true ;
         }
